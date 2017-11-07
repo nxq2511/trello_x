@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constants;
-use App\Repository\Column\ColumnRepository;
+use App\Repository\Task\TaskRepository;
 use Illuminate\Http\Request;
 
-class ColumnController extends Controller
+class TaskController extends Controller
 {
-    protected $columnRepository;
+    protected $taskRepository;
 
     /**
-     * ColumnController constructor.
-     * @param ColumnRepository $columnRepository
+     * TaskController constructor.
+     * @param TaskRepository $taskRepository
      */
-    public function __construct(ColumnRepository $columnRepository)
+    public function __construct(TaskRepository $taskRepository)
     {
-        $this->columnRepository = $columnRepository;
+        $this->taskRepository = $taskRepository;
     }
 
     /**
@@ -50,20 +50,21 @@ class ColumnController extends Controller
         $arrInput = json_decode($request->getContent());
         $apiFormat = array();
 
-        $orderMax = $this->columnRepository->getMaxColumn();
-
+        $orderMax = $this->taskRepository->getMaxTask();
         if(empty($orderMax)){
             $order = 1;
         } else {
             $order = $orderMax->order + 1;
         }
+
         $arrInsert = array(
-            'board_id' => $arrInput->board_id,
             'name' => $arrInput->name,
+            'column_id' => $arrInput->column_id,
             'order' => $order,
             'status' => '1'
         );
-        if($this->columnRepository->create($arrInsert)){
+
+        if($this->taskRepository->create($arrInsert)){
             $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
             $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
         } else {
@@ -120,19 +121,19 @@ class ColumnController extends Controller
     }
 
     /**
-     * Get column from board
+     * Get task from column
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getColumnFromBoard(Request $request)
+    public function getTaskFromColumn(Request $request)
     {
         $arrInput = json_decode($request->getContent());
         $apiFormat = array();
 
         $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
         $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
-        $apiFormat['data'] = $this->columnRepository->getColumnFromBoard($arrInput->board_id);
+        $apiFormat['data'] = $this->taskRepository->getTaskFromColumn($arrInput->column_id);
 
         return response()->json($apiFormat);
     }

@@ -40,4 +40,10 @@ Route::group(['prefix' => 'column', 'middleware' => ['api']], function () {
     Route::post('getColumn', ['uses' => 'ColumnController@getColumnFromBoard']);
 });
 
+Route::group(['prefix' => 'task', 'middleware' => ['api']], function () {
+    Route::post('store', ['uses' => 'TaskController@store']);
+
+    Route::post('getTask', ['uses' => 'TaskController@getTaskFromColumn']);
+});
+
 
