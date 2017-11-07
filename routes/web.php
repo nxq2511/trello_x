@@ -46,6 +46,8 @@ Route::group(['prefix' => 'task', 'middleware' => ['api']], function () {
     Route::post('store', ['uses' => 'TaskController@store']);
 
     Route::post('getTask', ['uses' => 'TaskController@getTaskFromColumn']);
+
+    Route::post('updateTaskToColumn', ['uses' => 'TaskController@updateTaskToColumn']);
 });
 
 

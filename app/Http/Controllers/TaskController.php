@@ -139,4 +139,30 @@ class TaskController extends Controller
 
         return response()->json($apiFormat);
     }
+
+    /**
+     * Update task to column
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateTaskToColumn(Request $request)
+    {
+        $arrInput = json_decode($request->getContent());
+        $apiFormat = array();
+
+        $arrUpdate = array(
+            'column_id' => $arrInput->column_id
+        );
+
+        if($this->taskRepository->update($arrInput->task_id, $arrUpdate)){
+            $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
+            $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
+        } else {
+            $apiFormat['status'] = Constants::RESPONSE_STATUS_ERROR;
+            $apiFormat['message'] = Constants::RESPONSE_MESSAGE_ERROR;
+        }
+
+        return response()->json($apiFormat);
+    }
 }
