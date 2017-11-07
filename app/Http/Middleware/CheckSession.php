@@ -33,6 +33,7 @@ class CheckSession
 
         $apiFormat = array();
         $login_token = $request->header('login_token');
+        echo $login_token;
         if (!isset($_SESSION['user'])) {
             $user = $this->userRepository->checkLoginToken($login_token);
             if (!empty($user)) {
