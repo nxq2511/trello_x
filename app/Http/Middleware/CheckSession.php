@@ -32,7 +32,7 @@ class CheckSession
         session_start();
 
         $apiFormat = array();
-        $login_token = $request->header('login_token');
+        $login_token = $request->header('login-token');
         echo $login_token;
         if (!isset($_SESSION['user'])) {
             $user = $this->userRepository->checkLoginToken($login_token);

@@ -5,9 +5,6 @@
 
     RewriteEngine On
 
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
@@ -24,5 +21,5 @@
     SetEnvIf Origin "http(s)?://(www\.)?(api.trello_x.uat.pgtest.co|localhost:4200|localhost:54138|localhost)$" AccessControlAllowOrigin=$0
             Header add Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
         	Header set Access-Control-Allow-Credentials true
-        	Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, login_token"
+        	Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, login-token"
 </IfModule>
