@@ -40,7 +40,7 @@ class CheckSession
                 return $next($request);
             } else {
                 $apiFormat['status'] = Constants::RESPONSE_STATUS_ERROR;
-                $apiFormat['message'] = Constants::RESPONSE_MESSAGE_ERROR;
+                $apiFormat['message'] = Constants::RESPONSE_SESSION_ERROR;
                 return response()->json($apiFormat);
             }
         } else {

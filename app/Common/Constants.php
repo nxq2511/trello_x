@@ -16,5 +16,6 @@ class Constants
 
     const RESPONSE_MESSAGE_SUCCESS = 'Success';
     const RESPONSE_MESSAGE_ERROR = 'Error';
+    const RESPONSE_SESSION_ERROR = 'Session error';
     const RESPONSE_JSON_FORMAT = 'Input is not JSON format';
 }
