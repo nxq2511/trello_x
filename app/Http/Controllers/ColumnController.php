@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Common\Constants;
-use App\Repository\Board\BoardRepository;
+use App\Repository\Column\ColumnRepository;
 use Illuminate\Http\Request;
 
-class BoardController extends Controller
+class ColumnController extends Controller
 {
-    protected $boardRepository;
+    protected $columnRepository;
 
     /**
-     * BoardController constructor.
-     * @param BoardRepository $boardRepository
+     * ColumnController constructor.
+     * @param ColumnRepository $columnRepository
      */
-    public function __construct(BoardRepository $boardRepository)
+    public function __construct(ColumnRepository $columnRepository)
     {
-        $this->boardRepository = $boardRepository;
+        $this->columnRepository = $columnRepository;
     }
 
     /**
@@ -26,13 +26,7 @@ class BoardController extends Controller
      */
     public function index()
     {
-        $apiFormat = array();
-
-        $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
-        $apiFormat['data'] = $this->boardRepository->getAll();
-        $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
-
-        return response()->json($apiFormat);
+        //
     }
 
     /**
@@ -56,12 +50,20 @@ class BoardController extends Controller
         $arrInput = json_decode($request->getContent());
         $apiFormat = array();
 
+        $orderMax = $this->columnRepository->getMaxColumn();
+
+        if(empty($orderMax)){
+            $order = 1;
+        } else {
+            $order = $orderMax->order + 1;
+        }
         $arrInsert = array(
+            'board_id' => $arrInput->board_id,
             'name' => $arrInput->name,
-            'owner' => $_SESSION['user']->id,
+            'order' => $order,
             'status' => '1'
         );
-        if($this->boardRepository->create($arrInsert)){
+        if($this->columnRepository->create($arrInsert)){
             $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
             $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
         } else {

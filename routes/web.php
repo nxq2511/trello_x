@@ -30,6 +30,14 @@ Route::group(['prefix' => 'user'], function () {
 
 Route::group(['prefix' => 'board', 'middleware' => ['api']], function () {
     Route::post('store', ['uses' => 'BoardController@store']);
+
+    Route::get('all', ['uses' => 'BoardController@index']);
+});
+
+Route::group(['prefix' => 'column', 'middleware' => ['api']], function () {
+    Route::post('store', ['uses' => 'ColumnController@store']);
+
+    Route::get('all', ['uses' => 'BoardController@index']);
 });
 
 
