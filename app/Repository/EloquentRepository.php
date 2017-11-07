@@ -27,7 +27,8 @@ abstract class EloquentRepository implements RepositoryInterface
     }
 
     /**
-     * get model
+     * Get model
+     *
      * @return string
      */
     abstract public function getModel();
@@ -52,6 +53,7 @@ abstract class EloquentRepository implements RepositoryInterface
 
     /**
      * Get one
+     *
      * @param $id
      * @return mixed
      */
@@ -80,6 +82,7 @@ abstract class EloquentRepository implements RepositoryInterface
 
     /**
      * Update
+     *
      * @param $id
      * @param array $attributes
      * @return bool|mixed
