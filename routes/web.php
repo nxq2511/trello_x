@@ -38,6 +38,8 @@ Route::group(['prefix' => 'column', 'middleware' => ['api']], function () {
     Route::post('store', ['uses' => 'ColumnController@store']);
 
     Route::post('getColumn', ['uses' => 'ColumnController@getColumnFromBoard']);
+
+    Route::post('updateColumnName', ['uses' => 'ColumnController@updateColumnName']);
 });
 
 Route::group(['prefix' => 'task', 'middleware' => ['api']], function () {

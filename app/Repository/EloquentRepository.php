@@ -86,10 +86,14 @@ abstract class EloquentRepository implements RepositoryInterface
      */
     public function update($id, array $attributes)
     {
-        $result = $this->find($id);
+        $result = $this->_model->find($id);
         if ($result) {
-            $result->update($attributes);
-            return $result;
+            foreach ($attributes as $key => $value) {
+                $result->$key = $value;
+            }
+            if($result->save()){
+                return $result;
+            };
         }
         return false;
     }

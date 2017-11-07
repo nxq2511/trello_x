@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Column;
 use App\Common\Constants;
 use App\Repository\Column\ColumnRepository;
 use App\Repository\Task\TaskRepository;
@@ -144,6 +145,32 @@ class ColumnController extends Controller
         $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
         $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
         $apiFormat['data'] = $column;
+
+        return response()->json($apiFormat);
+    }
+
+    /**
+     * Update column name
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateColumnName(Request $request)
+    {
+        $arrInput = json_decode($request->getContent());
+        $apiFormat = array();
+
+        $arrUpdate = array(
+            'name' => $arrInput->name
+        );
+
+        if($this->columnRepository->update($arrInput->column_id, $arrUpdate)){
+            $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
+            $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
+        } else {
+            $apiFormat['status'] = Constants::RESPONSE_STATUS_ERROR;
+            $apiFormat['message'] = Constants::RESPONSE_MESSAGE_ERROR;
+        }
 
         return response()->json($apiFormat);
     }
