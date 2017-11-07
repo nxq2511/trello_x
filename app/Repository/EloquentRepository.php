@@ -61,10 +61,12 @@ abstract class EloquentRepository implements RepositoryInterface
         return $result;
     }
 
+
     /**
      * Create
+     *
      * @param array $attributes
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function create(array $attributes)
     {
