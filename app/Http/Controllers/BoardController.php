@@ -29,8 +29,8 @@ class BoardController extends Controller
         $apiFormat = array();
 
         $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
-        $apiFormat['data'] = $this->boardRepository->getAll();
         $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
+        $apiFormat['data'] = $this->boardRepository->getAll();
 
         return response()->json($apiFormat);
     }

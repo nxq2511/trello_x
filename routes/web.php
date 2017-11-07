@@ -37,7 +37,7 @@ Route::group(['prefix' => 'board', 'middleware' => ['api']], function () {
 Route::group(['prefix' => 'column', 'middleware' => ['api']], function () {
     Route::post('store', ['uses' => 'ColumnController@store']);
 
-    Route::get('all', ['uses' => 'BoardController@index']);
+    Route::post('getColumn', ['uses' => 'ColumnController@getColumnFromBoard']);
 });
 
 

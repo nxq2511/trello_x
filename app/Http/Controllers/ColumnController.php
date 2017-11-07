@@ -118,4 +118,20 @@ class ColumnController extends Controller
     {
         //
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getColumnFromBoard(Request $request)
+    {
+        $arrInput = json_decode($request->getContent());
+        $apiFormat = array();
+
+        $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
+        $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
+        $apiFormat['data'] = $this->columnRepository->getColumnFromBoard($arrInput->board_id);
+
+        return response()->json($apiFormat);
+    }
 }

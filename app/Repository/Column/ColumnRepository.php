@@ -44,4 +44,15 @@ class ColumnRepository extends EloquentRepository
     {
         return $this->column->select('order')->orderBy('order', 'desc')->first();
     }
+
+    /**
+     * Get Column From Board Id
+     *
+     * @param $board_id
+     * @return mixed
+     */
+    public function getColumnFromBoard($board_id)
+    {
+        return $this->column->where(['board_id' => $board_id])->get();
+    }
 }
