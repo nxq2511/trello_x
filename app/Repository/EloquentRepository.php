@@ -71,7 +71,9 @@ abstract class EloquentRepository implements RepositoryInterface
         foreach ($attributes as $key => $value) {
             $this->_model->$key = $value;
         }
-        return $this->_model->save();
+        if($this->_model->save()){
+            return $this->_model;
+        }
     }
 
     /**

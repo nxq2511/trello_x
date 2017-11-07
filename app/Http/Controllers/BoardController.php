@@ -48,7 +48,7 @@ class BoardController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -61,9 +61,12 @@ class BoardController extends Controller
             'owner' => $_SESSION['user']->id,
             'status' => '1'
         );
-        if($this->boardRepository->create($arrInsert)){
+
+        $board = $this->boardRepository->create($arrInsert);
+        if ($board) {
             $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
             $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
+            $apiFormat['data'] = $board;
         } else {
             $apiFormat['status'] = Constants::RESPONSE_STATUS_ERROR;
             $apiFormat['message'] = Constants::RESPONSE_MESSAGE_ERROR;
@@ -75,7 +78,7 @@ class BoardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -86,7 +89,7 @@ class BoardController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -97,8 +100,8 @@ class BoardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -109,7 +112,7 @@ class BoardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
