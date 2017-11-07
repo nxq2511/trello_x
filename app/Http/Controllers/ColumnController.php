@@ -4,19 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Common\Constants;
 use App\Repository\Column\ColumnRepository;
+use App\Repository\Task\TaskRepository;
 use Illuminate\Http\Request;
 
 class ColumnController extends Controller
 {
     protected $columnRepository;
+    protected $taskRepository;
 
     /**
      * ColumnController constructor.
      * @param ColumnRepository $columnRepository
+     * @param TaskRepository $taskRepository
      */
-    public function __construct(ColumnRepository $columnRepository)
+    public function __construct(ColumnRepository $columnRepository, TaskRepository $taskRepository)
     {
         $this->columnRepository = $columnRepository;
+        $this->taskRepository = $taskRepository;
     }
 
     /**
@@ -133,9 +137,13 @@ class ColumnController extends Controller
         $arrInput = json_decode($request->getContent());
         $apiFormat = array();
 
+        $column = $this->columnRepository->getColumnFromBoard($arrInput->board_id);
+        foreach ($column as $item) {
+            $item->tasks = $this->taskRepository->getTaskFromColumn($item['id']);
+        }
         $apiFormat['status'] = Constants::RESPONSE_STATUS_OK;
         $apiFormat['message'] = Constants::RESPONSE_MESSAGE_SUCCESS;
-        $apiFormat['data'] = $this->columnRepository->getColumnFromBoard($arrInput->board_id);
+        $apiFormat['data'] = $column;
 
         return response()->json($apiFormat);
     }
